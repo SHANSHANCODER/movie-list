@@ -21,9 +21,13 @@ class App extends React.Component {
     this.filterMovie = this.filterMovie.bind(this);
     this.addMovieEntry=this.addMovieEntry.bind(this);
     this.setWatchStatus = this.setWatchStatus.bind(this);
+    this.watchedButton = this.watchedButton.bind(this);
+    this.toWatchButton = this.toWatchButton.bind(this);
+
 
     this.state = {
       movieData: movies, //set movieData to get all data from movies
+      movieStatues: true
     }
   }
 
@@ -44,24 +48,33 @@ class App extends React.Component {
     this.setState({movieData: newMovies})
   }
   
-  setWatchStatus(movie,movieStatus){
-    if (!movieStatus){ 
-   
+  setWatchStatus(movie){
+  
+   console.log("setWatchStatus was invoked", "movie", movie)
       //adding another property {status:true/false} to the movies
       //set the this.state status
-      this.setWatchStatus({movieStatus:false})
-    } else{
-     
-      this.setWatchStatus({movieStatus:true})
-    }
+   //   this.setState({movieStatus:!this.movieStatus})
+this.setState({moviestatus:movie.movieStatus})
+  console.log(movies)
   }
-  
+  watchedButton(){
+   var watched = this.state.movieData.filter((movie)=>movie.movieStatus === true);
+   console.log("watched button is invoked")
+   this.setState({movieData:watched})
+  }
+
+  toWatchButton(){
+   var toWatch = this.state.movieData.filter((movie)=>movie.movieStatus === false);
+   this.setState({movieData: toWatch})
+   console.log("to watch: ",toWatch)
+  }
   render() {
     console.log("calling app render")
     return (
       <div>
         <h1>Movie List</h1>
-      
+        <button onClick={this.watchedButton}>Watched</button>
+        <button onClick={this.toWatchButton}>Not Yet Watched</button>
         <Search filterMovie={this.filterMovie} />
         <Movies movies={this.state.movieData}
          setWatchStatus = {this.setWatchStatus}/>

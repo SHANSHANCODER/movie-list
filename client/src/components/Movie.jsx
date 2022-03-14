@@ -2,24 +2,24 @@ import React from 'react';
 
 
 
-const Movie = ({ movie, setWatchStatus }) => {
+const Movie = (props) => {
+  // console.log("props:", props)
   const ifWatched = () => {
-    setWatchStatus(movie, movie.movieStatus);
-    movie.status = !movie.movieStatus;
+    console.log("ifWatched got called")
+    props.movie.movieStatus = !props.movie.movieStatus;
+    props.setWatchStatus(props.movie);
+
   }
-
-  // return (
-  //   <li>movie</li>
-  // )
-
-  if (movie.movieStatus) {
-    return (<li>{movie.title}
+ // console.log("movie: ", props.movie)
+ 
+  if (props.movie.movieStatus) {
+    return (<li>{props.movie.title}
       <button onClick={ifWatched}>Watched</button>
     </li>)
   } else {
     return (
       <li>
-        {movie.title}
+        {props.movie.title}
         <button onClick={ifWatched}>Not Yet Watched</button>
       </li>
     )
