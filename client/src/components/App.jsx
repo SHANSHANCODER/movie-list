@@ -3,6 +3,7 @@ import Movies from './Movies.jsx';
 import Search from './Search.jsx';
 import Movie from './Movie.jsx';
 import Add from './Add.jsx'
+import axios from 'axios';
 
 var movies = [
   { title: 'Mean Girls',movieStatus:true},
@@ -27,7 +28,8 @@ class App extends React.Component {
 
     this.state = {
       movieData: movies, //set movieData to get all data from movies
-      movieStatues: true
+      movieStatues: true,
+      movieDatafortaggle: movies 
     }
   }
 
@@ -58,23 +60,33 @@ this.setState({moviestatus:movie.movieStatus})
   console.log(movies)
   }
   watchedButton(){
-   var watched = this.state.movieData.filter((movie)=>movie.movieStatus === true);
+   var watched = this.state.movieDatafortaggle.filter((movie)=>movie.movieStatus === true);
    console.log("watched button is invoked")
+   console.log('watchedmovies:', watched)
    this.setState({movieData:watched})
   }
 
   toWatchButton(){
-   var toWatch = this.state.movieData.filter((movie)=>movie.movieStatus === false);
+   var toWatch = this.state.movieDatafortaggle.filter((movie)=>movie.movieStatus === false);
    this.setState({movieData: toWatch})
-   console.log("to watch: ",toWatch)
+   console.log('toWatchmovies:', toWatch)
   }
+
+  // componentDidMount() {
+  //   axios.get('http://127.0.0.1:3000/api/movies')
+  //   .then(response => {
+  //     //const posts = response.data;
+  //     //this.setState ({posts});
+  //     console.log('axios get request')
+  //   })
+  // }
   render() {
     console.log("calling app render")
     return (
       <div>
         <h1>Movie List</h1>
-        <button onClick={this.watchedButton}>Watched</button>
-        <button onClick={this.toWatchButton}>Not Yet Watched</button>
+        <button className='watchbutton' onClick={this.watchedButton}>Watched</button>
+        <button className='watchbutton' onClick={this.toWatchButton}>Not Yet Watched</button>
         <Search filterMovie={this.filterMovie} />
         <Movies movies={this.state.movieData}
          setWatchStatus = {this.setWatchStatus}/>
