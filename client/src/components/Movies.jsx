@@ -7,8 +7,8 @@ const Movies = ({movies,setWatchStatus}) => {
   <ul>
     {movies.map(movie=>(
     <Movie 
-      key={movie.title} 
-      setWatchStatus = {setWatchStatus}
+      key={movie.movie_id} 
+      //setWatchStatus = {setWatchStatus}
       movie={movie}
     />))}
   </ul>
