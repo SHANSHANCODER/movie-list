@@ -21,6 +21,17 @@ db.connection.query('select * from movies',(err,result)=>{
         console.log('search result>>>>>>>',result);
         callback(err, result);
     })
+},
+create: function(input,callback){
+  let movietobeAdd='insert into movies (title) values ('+ '"'+input+'")'
+  db.connection.query(movietobeAdd,function(err,result){
+    if (err){
+      callback (err)
+    } else {
+     callback(null,result)
+    }
+
+  } )
 }
 
 

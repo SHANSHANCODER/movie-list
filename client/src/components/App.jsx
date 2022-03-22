@@ -21,7 +21,7 @@ class App extends React.Component {
     super(props);
 
    // this.filterMovie = this.filterMovie.bind(this);
-   // this.addMovieEntry = this.addMovieEntry.bind(this);
+    this.addMovieEntry = this.addMovieEntry.bind(this);
   //  this.setWatchStatus = this.setWatchStatus.bind(this);
     // this.watchedButton = this.watchedButton.bind(this);
     // this.toWatchButton = this.toWatchButton.bind(this);
@@ -53,6 +53,10 @@ class App extends React.Component {
   //   newMovies.push(newMovieObject);
   //   this.setState({ movieData: newMovies });
   // }
+  //add movie entry----->backend
+  addMovieEntry(newMovies) {
+    this.setState({ movieData: newMovies });
+  }
 
   //set movie status ----> frontend 
   // setWatchStatus(movie) {
@@ -113,8 +117,8 @@ class App extends React.Component {
           movies={this.state.movieData}
           setWatchStatus={this.setWatchStatus}
         />
-        <Add addMovieEntry={this.addMovieEntry} />
-      </div>
+        <Add  addMovieEntry={this.addMovieEntry} />
+      </div> 
     );
   }
 }

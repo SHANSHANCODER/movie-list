@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class Add extends React.Component {
     constructor(props) {
@@ -12,10 +13,24 @@ class Add extends React.Component {
 
     gettingInputAdd(val) {
         this.setState({inputTextAdd : val.target.value})
+        console.log("add string here >>>>>>>",val.target.value)
     }
 
     handleSubmitAdd(val) {
-        this.props.addMovieEntry(this.state.inputTextAdd);
+        axios
+        .post("/api/movies",{title:this.state.inputTextAdd})
+          .then((res) => {
+            //const posts = response.data
+            //this.setState ({posts});
+           //   console.log('res.data----->', res.data);
+           console.log('res.data>>>>>>',res.data)
+           this.props.addMovieEntry(res.data);
+         //   this.setState({ movieData: res.data});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      //  this.props.addMovieEntry(this.state.inputTextAdd);
         val.preventDefault();
     }
 

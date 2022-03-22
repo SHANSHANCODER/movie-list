@@ -3,10 +3,14 @@ const app = express();
 const PORT = 3000 || process.env.PORT;
 //const db = require ('../db/index.js')
 const model = require ('../model/index.js')
+const bodyParser = require("body-parser");
 //const search= require('../db/index.js')
 
 app.use(express.static('client/dist'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 app.get('/api/movies',(req,res)=>{
   // console.log('req',req);
    console.log('backend:get request made');
@@ -35,7 +39,26 @@ app.get('/api/movies/search', (req, res)=> {
  // res.send('Response send to client::'+req.query.term);
 
 });
-
+app.post('/api/movies/',(req,res)=>{
+ // console.log(req.body)
+  let movietobeAdd=req.body.title;
+  model.create(movietobeAdd,(err)=>{
+  if (err){
+    res.send('err')
+  } else {
+    model.getAll((err,result)=>{
+      if(err){
+        res.send('err')
+      } else {
+        res.status(201).send(result)
+        console.log(result)
+      }
+    })
+   // res.status(201).send(`${movietobeAdd} is added!`)
+  }
+  })
+  
+})
 //here. send respond to the search request. 
 //if someone hit "/api/movies/search?term=...."
 //send the code back, and get the endpoint
